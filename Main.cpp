@@ -25,7 +25,7 @@ cv::Vec3f getEyeball(cv::Mat& eye, std::vector<cv::Vec3f>& circles) {
             ++ptr;
         }
     }
-    int smallestSum = 9999;
+    int smallestSum = 99999999;
     int smallestSumIndex = -1;
 
     for (int i = 0; i < circles.size(); i++) {
@@ -59,7 +59,7 @@ cv::Point stabilize(std::vector<cv::Point>& points, int windowSize) {
     return cv::Point(sumX, sumY);
 }
 
-unsigned detectEyes(cv::Mat& resultFrame, cv::CascadeClassifier& faceCascade, cv::CascadeClassifier& eyeCascade, cv::CascadeClassifier& nikeCascade) {
+unsigned detectEyes(cv::Mat& resultFrame, cv::CascadeClassifier& faceCascade, cv::CascadeClassifier& eyeCascade) {
 
     //////////////////////////////////frame//////////////////////////////////////////////////////
 
@@ -119,6 +119,25 @@ unsigned detectEyes(cv::Mat& resultFrame, cv::CascadeClassifier& faceCascade, cv
         return faces.size();
     }
 }
+
+unsigned detectnike(cv::Mat& resultFrame, cv::CascadeClassifier& nikeCascade) {
+
+    cv::Mat grayscale, frame(resultFrame);
+    cv::cvtColor(frame, grayscale, cv::COLOR_BGR2GRAY); // convert image to grayscale
+    cv::equalizeHist(grayscale, grayscale); // enhance image contrast
+
+    std::vector<cv::Rect> nikes;
+    nikeCascade.detectMultiScale(grayscale, nikes, 1.1, 4, 0 | cv::CASCADE_SCALE_IMAGE, cv::Size(120, 80)); // detect nikes
+    
+    if (nikes.size() == 0) return 0; // any nikes was detected
+
+    for (int j(0); j < nikes.size(); ++j) {
+
+        rectangle(resultFrame, nikes[j].tl(), nikes[j].br(), cv::Scalar(255, 0, 0), 2); //Draw nikes Border
+    }
+    return nikes.size();
+}
+
 int main() {
     cv::CascadeClassifier faceCascade, eyeCascade, nikeCascade;
 
@@ -130,7 +149,7 @@ int main() {
         std::cerr << "Could not load eye detector." << std::endl;
         return -1;
     }
-    if (!nikeCascade.load("./ressources/haarcascade_eye_tree_eyeglasses.xml")) {
+    if (!nikeCascade.load("./ressources/nike_cascade.xml")) {
         std::cerr << "Could not load nike detector." << std::endl;
         return -1;
     }
@@ -148,9 +167,10 @@ int main() {
 
         if (!initFrame.empty())cv::imshow("init Webcam", initFrame);
 
-        unsigned frontRes(detectEyes(processFrame, faceCascade, eyeCascade, nikeCascade));//show get the best result
+        unsigned finds(detectEyes(processFrame, faceCascade, eyeCascade));//return faces if found
+        //unsigned finds(detectnike(processFrame, nikeCascade));//return nike logo if found
 
-        if (frontRes > 0) cv::imshow("process Webcam", processFrame); // displays the best result
+        if (finds > 0) cv::imshow("process Webcam", processFrame); // displays the best result
 
         if (cv::waitKey(120) >= 0) break; //wait 120 before next initFrame or user input
     }
