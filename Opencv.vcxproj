@@ -150,6 +150,7 @@
   <ItemGroup>
     <Xml Include="ressources\haarcascade_eye_tree_eyeglasses.xml" />
     <Xml Include="ressources\haarcascade_frontalface_alt.xml" />
+    <Xml Include="ressources\nike_cascade.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

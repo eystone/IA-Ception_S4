@@ -26,5 +26,8 @@
     <Xml Include="ressources\haarcascade_frontalface_alt.xml">
       <Filter>Fichiers de ressources</Filter>
     </Xml>
+    <Xml Include="ressources\nike_cascade.xml">
+      <Filter>Fichiers de ressources</Filter>
+    </Xml>
   </ItemGroup>
 </Project>
