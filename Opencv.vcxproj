@@ -148,8 +148,8 @@
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="haarcascade_eye_tree_eyeglasses.xml" />
-    <Xml Include="haarcascade_frontalface_alt.xml" />
+    <Xml Include="ressources\haarcascade_eye_tree_eyeglasses.xml" />
+    <Xml Include="ressources\haarcascade_frontalface_alt.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

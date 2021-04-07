@@ -20,10 +20,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="haarcascade_frontalface_alt.xml">
+    <Xml Include="ressources\haarcascade_eye_tree_eyeglasses.xml">
       <Filter>Fichiers de ressources</Filter>
     </Xml>
-    <Xml Include="haarcascade_eye_tree_eyeglasses.xml">
+    <Xml Include="ressources\haarcascade_frontalface_alt.xml">
       <Filter>Fichiers de ressources</Filter>
     </Xml>
   </ItemGroup>
